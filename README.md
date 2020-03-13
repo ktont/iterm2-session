@@ -77,7 +77,7 @@ iterm2 -> Preferences -> Profiles -> 选中Default -> Other Actions... -> Duplic
 
 # 传输文件支持
 
-通过堡垒机跳转的机器，无法使用 scp 进行传输。或者其他限制，比如只有 telnet，也是不能传文件。
+通过堡垒机跳转的机器，无法使用 scp 传输文件。如果只有 telnet，也不能传文件。
 
 就算有 scp，也没有 rz/sz 使用方便，所以 rz/sz 几乎是必选功能。
 
