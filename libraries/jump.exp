@@ -1,0 +1,199 @@
+#puts $argv
+#puts $argc
+
+set timeout 30
+
+set zmodem [lindex $argv 1]
+
+set idx 2
+set level 1
+while {$idx < $argc} {
+  set protocol [lindex $argv $idx]; incr idx
+  set user [lindex $argv $idx]; incr idx
+  set host [lindex $argv $idx]; incr idx
+  set port [lindex $argv $idx]; incr idx
+  set sudo [lindex $argv $idx]; incr idx
+  incr idx
+  set passwordn [lindex $argv $idx]; incr idx
+  set passwords [lrange $argv $idx [expr $passwordn+$idx-1]]; incr idx $passwordn
+  set commandn [lindex $argv $idx]; incr idx
+  set commands [lrange $argv $idx [expr $commandn+$idx-1]]; incr idx $commandn
+
+  set passwordi 0
+
+  if {$protocol == "ssh"} {
+    while { true } {
+      if {$user == ""} {
+        if {$level == 1} {
+          spawn ssh -p $port $host
+        } else {
+          send "ssh -p $port $host\r"
+        }
+      } else {
+        if {$level == 1} {
+          spawn ssh -p $port $user@$host
+        } else {
+          send "ssh -p $port $user@$host\r"
+        }
+      }
+
+      expect {
+        timeout {
+          puts "timeout!"
+          exit 1
+        }
+
+        -re "\[#$] $" {
+          # 登陆成功
+
+          # rz sz
+          if {$zmodem} {
+            # 这句话是必须的吗？不是，为了防止把本地字符集弄乱
+            # 如何隐藏这句话？可以隐藏
+            #send "stty -echo\r"
+            send "echo \$LC_CTYPE\rexport LC_CTYPE=\r"
+            #send "stty echo\r"
+          }
+
+          if {$passwordi > 0} { incr passwordi -1 }
+          if {$sudo} {
+            # TODO: sudo -s 也只能试 3 次，此处需要一个循环，重试完所有密码
+            send "sudo -s\r"
+            expect {
+              # -re "password for.*:|的密码："
+              "sudo] " {
+                if {$passwordi >= $passwordn} { break }
+                send "[lindex $passwords $passwordi]\r"
+                incr passwordi
+                exp_continue
+              }
+
+              "sudo: " {
+                break
+              }
+
+              -re "# $"
+            }
+            # end of expect
+          }
+
+          if {$commandn} {
+            foreach j $commands {
+              send "$j\r"
+            }
+          }
+
+          break
+        }
+
+        -re "\[Tt]oken:" {
+          set timeout 600
+          expect_user -re "(.*)\n"
+          set timeout 10
+          send "$expect_out(buffer)\n"
+          exp_continue
+        }
+
+        "Host key verification failed." {
+          system "ssh-keygen -R $host"
+          puts "retry"
+          continue
+        }
+
+        "continue connecting (yes/no)?" {
+          send "yes\r"
+          exp_continue
+        }
+
+        -re "\[Pp]assword:" {
+          if {$passwordi >= $passwordn} { break }
+          send "[lindex $passwords $passwordi]\r"
+          incr passwordi
+          exp_continue
+        }
+
+        eof {
+          if {$passwordi > 0 && $passwordi < $passwordn} {
+            continue
+          } else {
+            exit
+          }
+        }
+      }
+      # end of expect
+    }
+  } else {
+    while { true } {
+      if {$level == 1} {
+        spawn telnet $host $port
+      } else {
+        send "telnet $host $port\r"
+      }
+      expect {
+        timeout {
+          puts "timeout!"
+          exit 1
+        }
+
+        -re "\[#$] $" {
+          # 登陆成功
+          # rz sz
+          if {$zmodem} {
+            send "export LC_CTYPE=\r"
+          }
+          break
+        }
+
+        # ruijie switch 
+        -re "#$" {
+          # 登陆成功
+          break
+        }
+
+        # telnet username
+        "login: " {
+          send "$user\r"
+          exp_continue
+        }
+
+        # ruijie switch 
+        "Username:" {
+          send "$user\r"
+          exp_continue
+        }
+
+        -re "\[Pp]assword:" {
+          if {$passwordi >= $passwordn} { break }
+          send "[lindex $passwords $passwordi]\r"
+          incr passwordi
+          exp_continue
+        }
+
+        eof {
+          if {$passwordi > 0 && $passwordi < $passwordn} {
+            continue
+          } else {
+            exit
+          }
+        }
+      }
+      # endof expect
+    }
+  }
+  # endof telnet
+
+  incr level
+
+  # puts $protocol
+  # puts $user
+  # puts $host
+  # puts $port
+  # puts $sudo
+  # puts "passwords $passwords"
+  # puts "commands $commands"
+  # puts "---------------------------- $idx $argc"
+}
+
+# puts "debug: interact mode"
+interact
+
