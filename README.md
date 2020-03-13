@@ -40,7 +40,7 @@ iterm2 和 SecureCRT 都有用，iterm2 的终端显示好一些、lrzsz 文件�
 git clone https://github.com/ktont/iterm2-session ~/iterm2-session
 ```
 
-写一个配置文件，比如 /tmp/192.168.1.1.json
+写一个配置文件，比如 192.168.1.1.json
 
 ```
 cd ~/iterm2-session
@@ -69,11 +69,11 @@ iterm2 -> Preferences -> Profiles -> 选中Default -> Other Actions... -> Duplic
 
 ![](_images/profile.png)
 
-此时，一个最简的session就完成了，在 iterm2 中，快捷键 COMMAND+O，然后双击 `192.168.1.1` 就会去自动登陆 
-
 * Command `Login Shell`, 意思是创建一个独立的终端
 * Directory `~/iterm2-session`，意思是终端默认进入的目录。这个很重要，设定了工作目录。
 * send text as start `./jump.sh 192.168.1.1.json`, 意思是执行这个命令，不要忽视 `./jump.sh` 指定了当前目录。
+
+此时，一个最简的session就完成了，在 iterm2 中，快捷键 COMMAND+O，然后双击 `192.168.1.1` 就会去自动登陆 
 
 # 传输文件支持
 
