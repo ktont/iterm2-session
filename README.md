@@ -167,8 +167,9 @@ https://github.com/aikuyun/iterm2-zmodem
 
 ### 关于token
 
-更注重安全的公司的堡垒机上会有 token 认证，当遇到 token 认证时，程序会等待 60 秒，输入 token。
-程序只认证 `token:` 或者 `Token:` 这样的提示。
+更注重安全的公司的堡垒机上会有 token 认证。
+本程序遇到 token 认证时，会睡眠 60 秒，等待你输入 token。
+目前只识别 `token:` 或者 `Token:` 这样的字样。
 如果贵司的 token 提示不同，请自行修改 expect 脚本。或者，告诉我。
 
 ### 关于telnet
