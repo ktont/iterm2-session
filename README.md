@@ -3,14 +3,14 @@
 iterm2 的 session manager
 
 平时要经常登陆公司堡垒机，跳转部门服务器，再跳转到一些设备上，进行操作和传送文件。
-进行的操作一般都是重复的一些命令，传送文件使用 lrzsz。
+进行的操作一般都是重复的一些命令，传送的文件一般都是小文件。
 
-iterm2 和 SecureCRT 都有用，iterm2 的终端显示好一些、lrzsz 文件传送准确性高，而 SecureCRT 的 session manager、button bar 较好用。
+iterm2 和 SecureCRT 都有用，iterm2 的终端显示好一些、sz/rz 文件传送准确性高，而 SecureCRT 的 session manager、button bar 较好用。
 
 一直在寻找 iterm2 上的 session manager 方法，就像 SecureCRT 那样的。把两者融合起来。
 
 
-我发现 iterm2 的 Profile 功能可以配置成 session manager，又发现 iterm2 的 Trigger 功能支持 lrzsz。如果再实现自动登陆、自动跳转，这事儿就成了。
+我发现 iterm2 的 Profile 功能可以配置成 session manager，又发现 iterm2 的 Trigger 功能支持 sz/rz。如果再实现自动登陆、自动跳转，这事儿就成了。
 
 因此这个方案是三项技术的组合
 
@@ -79,7 +79,7 @@ iterm2 -> Preferences -> Profiles -> 选中Default -> Other Actions... -> Duplic
 
 通过堡垒机跳转的机器，无法使用 scp 传文件。如果只有 telnet，也不能传文件。
 
-就算有 scp，也没有 rz/sz 用起来方便，所以 rz/sz 几乎是必选功能。
+就算有 scp，也没有 sz/rz 用起来方便，所以 sz/rz 几乎是必选功能。
 
 这是一个第三方的方案 `iterm2-zmodem`，请使用下面的教程进行安装
 https://github.com/aikuyun/iterm2-zmodem
@@ -98,7 +98,7 @@ https://github.com/aikuyun/iterm2-zmodem
 
 ## 设置 zmodem
 
-如果想要在服务器上执行 rz/sz，则必须在配置文件中指定 zmodem 选项为 true
+如果想要在服务器上执行 sz/rz，则必须在配置文件中指定 zmodem 选项为 true
 
 比如
 ```
