@@ -180,7 +180,7 @@ https://github.com/aikuyun/iterm2-zmodem
 
 ### 关于Password Manager
 iterm2 下 ALT+COMMAND+F 会唤出密码管理器，这个功能和 SecureCRT 的 button bar 类似。
-本文已开始也提到了这个 button bar，这是一个很好用的小工具。
+本文一开始也提到了这个 button bar，它是一个很好用的小工具，用来发送密码。
 
 我发现iterm2 的 Password Manager有时候会失灵，交互体验也不太好。
 找了很久后，找到一个粘贴板工具凑合着用，它也有一些小问题，密码会从收藏夹里消失。
