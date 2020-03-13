@@ -163,7 +163,7 @@ https://github.com/aikuyun/iterm2-zmodem
 
 ## 再PS
 
-下面是一个高级用法，需要你添加规则
+下面是一些高级用法，需要你添加规则
 
 ### 关于token
 
