@@ -2,12 +2,12 @@
 =====================
 iterm2 的 session manager
 
-我平时要经常登陆公司堡垒机，跳转部门服务器，再跳转到一些设备上，进行操作和传送文件。
+平时要经常登陆公司堡垒机，跳转部门服务器，再跳转到一些设备上，进行操作和传送文件。
 进行的操作一般都是重复的一些命令，传送文件使用 lrzsz。
 
 iterm2 和 SecureCRT 都有用，iterm2 的终端显示好一些、lrzsz 文件传送准确性高，而 SecureCRT 的 session manager、button bar 较好用。
 
-我一直在寻找 iterm2 上的 session manager 方法，就像 SecureCRT 那样的。把两者融合起来。
+一直在寻找 iterm2 上的 session manager 方法，就像 SecureCRT 那样的。把两者融合起来。
 
 
 我发现 iterm2 的 Profile 功能可以配置成 session manager，又发现 iterm2 的 Trigger 功能支持 lrzsz。如果再实现自动登陆、自动跳转，这事儿就成了。
@@ -16,17 +16,17 @@ iterm2 和 SecureCRT 都有用，iterm2 的终端显示好一些、lrzsz 文件�
 
 * iterm2 的 Profile
 * iterm2 的 Trigger
-* iterm2-session（本程序），实现自动登陆、自动跳转
+* iterm2-session（本程序）
 
 # 安装
 
-下面教程手把手的打造 iterm2 的 session manager。
+下面的教程是 Hello world，设置一个最简单的Profile
 
 效果图如下
 
 ![](_images/final.png)
 
-当你点击其中一个条目时，会打开一个tab自动登陆。
+当你点击其中一个条目时，会自动登陆。
 如下图
 
 ![](_images/session56.png)
@@ -70,19 +70,21 @@ iterm2 -> Preferences -> Profiles -> 选中Default -> Other Actions... -> Duplic
 ![](_images/profile.png)
 
 * Command `Login Shell`, 意思是创建一个独立的终端
-* Directory `~/iterm2-session`，意思是终端默认进入的目录。这个很重要，设定了工作目录。
-* send text as start `./jump.sh 192.168.1.1.json`, 意思是执行这个命令，不要忽视 `./jump.sh` 指定了当前目录。
+* Directory `~/iterm2-session`，相当于设定工作目录。这个很重要。
+* send text as start `./jump.sh 192.168.1.1.json`, 意思是执行这个命令，注意要指定当前目录。
 
 此时，一个最简的session就完成了，在 iterm2 中，快捷键 COMMAND+O，然后双击 `192.168.1.1` 就会去自动登陆 
 
 # 传输文件支持
 
-通过堡垒机跳转的机器，无法使用 scp 传输文件。如果只有 telnet，也不能传文件。
+通过堡垒机跳转的机器，无法使用 scp 传文件。如果只有 telnet，也不能传文件。
 
-就算有 scp，也没有 rz/sz 使用方便，所以 rz/sz 几乎是必选功能。
+就算有 scp，也没有 rz/sz 用起来方便，所以 rz/sz 几乎是必选功能。
 
-这是一个第三方的方案，请使用下面的教程进行安装
+这是一个第三方的方案 `iterm2-zmodem`，请使用下面的教程进行安装
 https://github.com/aikuyun/iterm2-zmodem
+
+安装好后，不用自动登陆，手工登陆一台服务器测试，确保 sz/rz 可以工作。
 
 ## 配置模版
 请新建一个 Profile，把 iterm2-zmodem 的 trigger 配置好后，当做一个模版。
@@ -109,7 +111,7 @@ https://github.com/aikuyun/iterm2-zmodem
 ```
 
 为什么必须要这个选项呢？因为 iterm2-session 用了 tcl/expect 工具，这个工具和 trigger 不能很好的配合。
-有人发现设定字符集可以工作，深层原因我没找。如果你知道原因，请告诉我，谢谢！
+有人发现设定字符集可以工作。深层原因不知道，如果你知道原因，请告诉我，谢谢！
 
 所以你使用这个选项后，会发现 iterm2-session 在目标服务器上会重设字符集，以防字符集混乱，请勿怪。
 
