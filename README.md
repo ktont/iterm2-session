@@ -73,7 +73,7 @@ iterm2 -> Preferences -> Profiles -> 选中Default -> Other Actions... -> Duplic
 * Directory `~/iterm2-session`，相当于设定工作目录。这个很重要。
 * send text as start `./jump.sh 192.168.1.1.json`, 意思是执行这个命令，注意要指定当前目录。
 
-此时，一个最简的session就完成了，在 iterm2 中，快捷键 COMMAND+O，然后双击 `192.168.1.1` 就会去自动登陆 
+此时，一个最简的 profile 就完成了，在 iterm2 中，快捷键 COMMAND+O，然后双击 `192.168.1.1` 就会去自动登陆 
 
 # 传输文件支持
 
