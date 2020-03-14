@@ -5,12 +5,12 @@ iterm2 的 session manager
 平时要经常登陆公司堡垒机，跳转部门服务器，再跳转到一些设备上，进行操作和传送文件。
 进行的操作一般是重复的一些命令，传送的文件一般是小文件。
 
-iterm2 和 SecureCRT 都有用，iterm2 的终端显示好一些、sz/rz 文件传送准确性高，而 SecureCRT 的 session manager、button bar 比较好用。
+iterm2 和 SecureCRT 都有用，iterm2 的终端显示好一些、rz/sz 文件传送准确性高，而 SecureCRT 的 session manager、button bar 比较好用。
 
 一直在寻找 iterm2 上的 session manager 方法，就像 SecureCRT 那样的。把两者融合起来。
 
 
-我发现 iterm2 的 Profile 功能可以配置成 session manager，又发现 iterm2 的 Trigger 功能支持 sz/rz。如果再实现自动登陆、自动跳转，这事儿就成了。
+我发现 iterm2 的 Profile 功能可以配置成 session manager，又发现 iterm2 的 Trigger 功能支持 rz/sz。如果再实现自动登陆、自动跳转，这事儿就成了。
 
 因此这个方案是三项技术的组合
 
@@ -79,12 +79,12 @@ iterm2 -> Preferences -> Profiles -> 选中Default -> Other Actions... -> Duplic
 
 通过堡垒机跳转的机器，无法使用 scp 传文件。如果只有 telnet，也不能传文件。
 
-就算有 scp，也没有 sz/rz 用起来方便，所以 sz/rz 几乎是必选功能。
+就算有 scp，也没有 rz/sz 用起来方便，所以 rz/sz 几乎是必选功能。
 
 这是一个第三方的方案 `iterm2-zmodem`，请使用下面的教程进行安装
 https://github.com/aikuyun/iterm2-zmodem
 
-安装好后，不用自动登陆，手工登陆一台服务器测试，确保 sz/rz 可以工作。
+安装好后，不用自动登陆，手工登陆一台服务器测试，确保 rz/sz 可以工作。
 
 ## 配置模版
 请新建一个 Profile，把 iterm2-zmodem 的 trigger 配置好后，当做一个模版。
@@ -94,11 +94,11 @@ https://github.com/aikuyun/iterm2-zmodem
 
 这个动作有快捷键 COMMAND+=
 
-当你使用 sz/rz 时，发现一个 Profile 没有设置 trigger。不要犹豫，立即删除它，然后从 Default 复制一份，填上名称即可。
+当你使用 rz/sz 时，发现一个 Profile 没有设置 trigger。不要犹豫，立即删除它，然后从 Default 复制一份，填上名称即可。
 
 ## 设置 zmodem
 
-如果想要在服务器上执行 sz/rz，则必须在配置文件中指定 zmodem 选项为 true
+如果想要在服务器上执行 rz/sz，则必须在配置文件中指定 zmodem 选项为 true
 
 比如
 ```
@@ -114,6 +114,9 @@ https://github.com/aikuyun/iterm2-zmodem
 有人发现设定字符集可以工作。深层原因不知道，如果你知道原因，请告诉我，谢谢！
 
 所以你使用这个选项后，会发现 iterm2-session 在目标服务器上会重设字符集，以防字符集混乱，请勿怪。
+
+## 关于tmux、screen
+tmux 和 screen 下，无法使用 rz/sz。很遗憾。如果你能解决，请告诉我。
 
 # 使用手册
 
@@ -190,7 +193,20 @@ iterm2 下 ALT+COMMAND+F 会唤出密码管理器，这个功能和 SecureCRT �
 如果你有更好的方案，请告诉我。
 
 # linux
-虽然，初衷是为了搭配 osx 的 iterm2 使用，但是本程序也可以做一个命令行工具使用。可以跑在类 linux 环境下。
+虽然，初衷是为了搭配 iterm2 使用，但是本程序也可以做一个命令行工具使用，跑在类 linux 环境下。
+
+安装方法
+
+```
+cd /usr/local
+git clone https://github.com/ktont/iterm2-session
+ln -s /usr/local/iterm2-session/jump.sh /usr/local/bin/
+```
+
+使用方法
+```
+jump.sh 192.168.1.1.json
+```
 
 # 联系我
 
