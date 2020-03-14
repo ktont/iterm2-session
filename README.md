@@ -3,9 +3,9 @@
 iterm2 的 session manager
 
 平时要经常登陆公司堡垒机，跳转部门服务器，再跳转到一些设备上，进行操作和传送文件。
-进行的操作一般都是重复的一些命令，传送的文件一般都是小文件。
+进行的操作一般是重复的一些命令，传送的文件一般是小文件。
 
-iterm2 和 SecureCRT 都有用，iterm2 的终端显示好一些、sz/rz 文件传送准确性高，而 SecureCRT 的 session manager、button bar 较好用。
+iterm2 和 SecureCRT 都有用，iterm2 的终端显示好一些、sz/rz 文件传送准确性高，而 SecureCRT 的 session manager、button bar 比较好用。
 
 一直在寻找 iterm2 上的 session manager 方法，就像 SecureCRT 那样的。把两者融合起来。
 
