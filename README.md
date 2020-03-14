@@ -164,7 +164,7 @@ tmux 和 screen 下，无法使用 rz/sz。很遗憾。如果你能解决，请�
 * 如果同时指定了 user 选项和 user@host，那么行为未知
 * 如果同时指定了 port 选项和 host:port，那么行为未知
 * 跳转的层级无限制，不过一般就 1 跳
-* command 和 password 可以单个或者多个
+* command 和 password 可以是数组
 
 ## 再PS
 
