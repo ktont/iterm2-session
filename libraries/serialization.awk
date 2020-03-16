@@ -90,14 +90,9 @@ function parseBlock(block, protocol, user, host, port, sudo, zmodem, passwords, 
   n = length(passwords)
   if(!contains(passwords, "")) passwords[n++] = ""
 
-  #n = length(commands)
-  #for(i=0; i<n; i++) print "3333333333", commands[i]
-
   if(!port) port = protocol == "ssh" ? 22 : 23
   if(!sudo) sudo = 0
   if(!zmodem) zmodem = 0
-
-  #print "portttttttttt", port
 
   output[0]++
   output[1] = zmodem || output[1] ? 1 : 0;

@@ -1,21 +1,21 @@
 {
-    "protocol": "ssh",
-    "host": "root@jumpserver.domain.com:555",
-    "password": [ "pass111", "pass222" ],
-    "zmodem": true,
-    "jump": {
-        "protocol": "ssh",
+	"protocol": "ssh",
+	"host": "root@jumpserver.domain.com:555",
+	"password": [ "pass111", "pass222" ],
+	"zmodem": true,
+	"jump": {
+	  	"protocol": "ssh",
         "port": 2222,
-        "host": "partition.domain.com",
+	  	"host": "partition.domain.com",
         "sudo": true,
-        "jump": {
-            "protocol": "telnet",
-            "host": "192.168.1.1",
+	  	"jump": {
+	  		"protocol": "telnet",
+		  	"host": "192.168.1.1",
             "password": "admin",
             "command": [
                 "cd /data/app/logs",
                 "ls -l"
             ]
-        }
-    }
+	  	}
+	}
 }

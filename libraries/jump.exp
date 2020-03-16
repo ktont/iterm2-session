@@ -141,6 +141,35 @@ while {$idx < $argc} {
           if {$zmodem} {
             send "export LC_CTYPE=\r"
           }
+
+          if {$passwordi > 0} { incr passwordi -1 }
+          if {$sudo} {
+            # TODO: sudo -s 也只能试 3 次，此处需要一个循环，重试完所有密码
+            send "sudo -s\r"
+            expect {
+              # -re "password for.*:|的密码："
+              "sudo] " {
+                if {$passwordi >= $passwordn} { break }
+                send "[lindex $passwords $passwordi]\r"
+                incr passwordi
+                exp_continue
+              }
+
+              "sudo: " {
+                break
+              }
+
+              -re "# $"
+            }
+            # end of expect
+          }
+
+          if {$commandn} {
+            foreach j $commands {
+              send "$j\r"
+            }
+          }
+          
           break
         }
 
