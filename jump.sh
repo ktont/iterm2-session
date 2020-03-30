@@ -22,7 +22,13 @@ if ! [ -s "$1" ]; then
     exit 1
 fi
 
-ret=`${prefix}/libraries/JSON.sh/JSON.sh -p -l < "$1" | awk -f ${prefix}/libraries/serialization.awk`
+ret=`grep -v '^[[:blank:]]*#' "$1" | ${prefix}/libraries/JSON.sh/JSON.sh -p -l`
+err=$?
+if [ $err -eq 1 ]; then
+    echo "json invalid"
+    exit $err
+fi
+ret=`echo "$ret" | awk -f ${prefix}/libraries/serialization.awk`
 err=$?
 if [ $err -eq 1 ]; then
     echo "$ret"

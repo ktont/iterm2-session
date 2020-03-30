@@ -8,7 +8,7 @@ BEGIN{
 {
   gsub(/[\[\]"]/,"",$1) # remove [""]
   gsub(/^"|"$/,"",$2) # remove ""
-  line[NR] = $0 
+  line[NR] = $0
 }
 
 function contains(arr, val) {
@@ -18,9 +18,10 @@ function contains(arr, val) {
   return 0
 }
 
-function parseBlock(block, protocol, user, host, port, sudo, zmodem, passwords, commands) {
+function parseBlock(block, protocol, user, host, port, sudo, zmodem, passwords, commands, menu) {
   passwords[0] = ""
   commands[0] = ""; delete commands[0]
+  menu[0] = ""; delete menu[0]
   blocn = length(block)
   for(i=1; i<=blocn; i++) {
     split(block[i], sp, "\t")
@@ -74,6 +75,10 @@ function parseBlock(block, protocol, user, host, port, sudo, zmodem, passwords, 
       commands[0] = sp[2]
     } else if(match(sp[1], /^command,[0-9]+$/)) {
       commands[substr(sp[1], 9)] = sp[2]
+    } else if(sp[1] == "menu") {
+      menu[0] = sp[2]
+    } else if(match(sp[1], /^menu,[0-9]+$/)) {
+      menu[substr(sp[1], 6)] = sp[2]
     }
   }
 
@@ -112,6 +117,11 @@ function parseBlock(block, protocol, user, host, port, sudo, zmodem, passwords, 
   output[++outpun] = n
   for(i=0; i<n; i++)
     output[++outpun] = commands[i]
+
+  n = length(menu)
+  output[++outpun] = n
+  for(i=0; i<n; i++)
+    output[++outpun] = menu[i]
 }
 
 END {
@@ -128,7 +138,10 @@ END {
         current[++m] = line[i]
       }
     }
-    # print "---------------------"
+    
+    #print "---------------------"
+    #for(i in current) print line[i];
+    #print "====================="
 
     parseBlock(current)
 

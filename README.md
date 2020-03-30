@@ -137,10 +137,22 @@ tmux 和 screen 下，无法使用 rz/sz。很遗憾。如果你能解决，请�
         "host": "public@10.3.4.5",
         "password": "admin",
         "sudo": true,
+        # run command `m`, list your favourite hosts
+        "menu": [
+            "telnet 192.168.1.1",
+            "telnet 192.168.1.2",
+            "telnet 192.168.1.3"
+        ],
         "jump": {
             "protocol": "telnet",
             "host": "root@192.168.1.1:3333",
-            "command": ["cd /data", "ls -l"]
+            "command": ["cd /data", "ls -l"],
+            # run command `m`, list your favourite paths
+            "menu": [
+                "cd /data/app/logs/",
+                "cd /usr/local/your-app/",
+                "cd /var/logs"
+            ]
         }
     }
 }
@@ -152,11 +164,12 @@ tmux 和 screen 下，无法使用 rz/sz。很遗憾。如果你能解决，请�
 * 依次尝试 两个密码，直到成功
 * 登陆成功后，执行命令 uname -a
 * 第二跳，跳转到 10.3.4.5
-* 登陆成功后，执行sudo -s，
+* 登陆成功后，执行sudo -s，并且在 10.3.4.5 上生成一个 m 命令，m 命令会打印你常用的机器列表
 * 第三跳，跳转到 192.168.1.1，这次是 telnet
-* 登陆成功后，执行两个命令 cd /data 和 ls -l
+* 登陆成功后，执行两个命令 cd /data 和 ls -l，并且在 192.168.1.1 上生成一个 m 命令，m 命令会打印你常用的位置
 
 再补充几点说明
+* 这个 json 文件支持注释
 * 密码的个数没有限制，登陆会重试直至成功
 * 程序会自动添加空密码，就是空字符串
 * 如果sodu需要密码，就在你提供的密码中重试直到成功，和登陆重试一样
@@ -164,7 +177,7 @@ tmux 和 screen 下，无法使用 rz/sz。很遗憾。如果你能解决，请�
 * 如果同时指定了 user 选项和 user@host，那么行为未知
 * 如果同时指定了 port 选项和 host:port，那么行为未知
 * 跳转的层级无限制，不过一般就 1 跳
-* command 和 password 可以是数组
+* command 和 password 和 menu 可以是数组
 
 ## 再PS
 

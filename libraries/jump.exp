@@ -18,6 +18,8 @@ while {$idx < $argc} {
   set passwords [lrange $argv $idx [expr $passwordn+$idx-1]]; incr idx $passwordn
   set commandn [lindex $argv $idx]; incr idx
   set commands [lrange $argv $idx [expr $commandn+$idx-1]]; incr idx $commandn
+  set menn [lindex $argv $idx]; incr idx
+  set menu [lrange $argv $idx [expr $menn+$idx-1]]; incr idx $menn
 
   set passwordi 0
 
@@ -81,6 +83,14 @@ while {$idx < $argc} {
             foreach j $commands {
               send "$j\r"
             }
+          }
+
+          if {$menn} {
+            send "m() {\rcat <<EOF\r"
+            foreach j $menu {
+              send "$j\r"
+            }
+            send "EOF\r}\r"
           }
 
           break
