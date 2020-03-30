@@ -200,11 +200,6 @@ tmux 和 screen 下，无法使用 rz/sz。很遗憾。如果你能解决，请�
 iterm2 下 ALT+COMMAND+F 会唤出密码管理器，这个功能和 SecureCRT 的 button bar 类似。
 本文一开始也提到了这个 button bar，它是一个很好用的小工具，用来发送密码。
 
-我发现iterm2 的 Password Manager有时候会失灵，交互体验也不太好。
-找了很久后，找到一个粘贴板工具凑合着用，它也有一些小问题，密码会从收藏夹里消失。
-
-如果你有更好的方案，请告诉我。
-
 # linux
 虽然，初衷是为了搭配 iterm2 使用，但是本程序也可以做一个命令行工具使用，跑在类 linux 环境下。
 
