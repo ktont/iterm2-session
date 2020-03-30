@@ -137,7 +137,7 @@ tmux 和 screen 下，无法使用 rz/sz。很遗憾。如果你能解决，请�
         "host": "public@10.3.4.5",
         "password": "admin",
         "sudo": true,
-        # run command `m`, list your favourite hosts
+        # run command `m`, list your favourite hosts. Copy & Paste someone.
         "menu": [
             "telnet 192.168.1.1",
             "telnet 192.168.1.2",
