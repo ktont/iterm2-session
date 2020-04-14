@@ -120,6 +120,29 @@ tmux 和 screen 下，无法使用 rz/sz。很遗憾。如果你能解决，请�
 
 # 使用手册
 
+## 典型场景
+
+当你管理成百上千台机器的时候，不可能创建那么多配置文件。那么，可以使用变量替换。
+
+```
+{
+    "protocol": "ssh",
+    "host": "user@jump-server.corp.com",
+    "password": "123456",
+    "jump": {
+        "protocol": "telnet",
+        "user": "root",
+        "host": "&&&",
+        "password": "123456"
+    }
+}
+
+```
+
+对于 `host`，当它是 &&& 的时候，程序会停下来等待你输入一个机器的地址（hostname或者ip）。
+
+
+## 所有功能
 上面介绍的几个例子，只是 iterm2-session 的一小部分功能。这里列出它的所有功能。
 
 一个尽可能复杂的配置是这样的
@@ -178,6 +201,8 @@ tmux 和 screen 下，无法使用 rz/sz。很遗憾。如果你能解决，请�
 * 如果同时指定了 port 选项和 host:port，那么行为未知
 * 跳转的层级无限制，不过一般就 1 跳
 * command 和 password 和 menu 可以是数组
+
+
 
 ## 再PS
 

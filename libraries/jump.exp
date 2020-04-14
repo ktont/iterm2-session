@@ -23,7 +23,32 @@ while {$idx < $argc} {
 
   set passwordi 0
 
+  if {$user == "&&&"} {
+    set timeout 600
+    send_user "\nuser: "
+    expect_user -re "(.*)\n"
+    set user "$expect_out(buffer)"
+    set timeout 10
+  }
+
+  if {$host == "&&&"} {
+    set timeout 600
+    send_user "\nhost: "
+    expect_tty -re "(.*)\n"
+    set host "$expect_out(1,string)"
+    set timeout 10
+  }
+
+  if {$port == "&&&"} {
+    set timeout 600
+    send_user "\nport: "
+    expect_user -re "(.*)\n"
+    set port "$expect_out(buffer)"
+    set timeout 10
+  }
+
   if {$protocol == "ssh"} {
+
     while { true } {
       if {$user == ""} {
         if {$level == 1} {
@@ -53,7 +78,8 @@ while {$idx < $argc} {
             # 这句话是必须的吗？不是，为了防止把本地字符集弄乱
             # 如何隐藏这句话？可以隐藏
             #send "stty -echo\r"
-            send "echo \$LC_CTYPE\rexport LC_CTYPE=\r"
+            send "echo \$LC_CTYPE && export LC_CTYPE=\r"
+            expect -re "\[#$] $"
             #send "stty echo\r"
           }
 
@@ -150,6 +176,7 @@ while {$idx < $argc} {
           # rz sz
           if {$zmodem} {
             send "export LC_CTYPE=\r"
+            expect -re "\[#$] $"
           }
 
           if {$passwordi > 0} { incr passwordi -1 }
