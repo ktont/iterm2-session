@@ -241,13 +241,4 @@ ln -s /usr/local/iterm2-session/jump.sh /usr/local/bin/
 jump.sh 192.168.1.1.json
 ```
 
-# 联系我
-
-1812296219@qq.com
-
-
-
-
-
-
 
