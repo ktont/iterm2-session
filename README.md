@@ -10,7 +10,7 @@ iterm2 和 SecureCRT 都有用，iterm2 的终端显示好一些、rz/sz 文件�
 一直在寻找 iterm2 上的 session manager 方法，就像 SecureCRT 那样的。把两者融合起来。
 
 
-我发现 iterm2 的 Profile 功能可以配置成 session manager，又发现 iterm2 的 Trigger 功能支持 rz/sz。于是，实现了自动登陆、自动跳转。
+iterm2 的 Profile 功能可以配置成 session manager，又发现 iterm2 的 Trigger 功能支持 rz/sz。于是，实现了自动登陆、自动跳转。
 
 这事儿就成了，因此这个方案是三项技术的组合
 
@@ -96,27 +96,8 @@ https://github.com/aikuyun/iterm2-zmodem
 
 当你使用 rz/sz 时，发现一个 Profile 没有设置 trigger。不要犹豫，立即删除它，然后从 Default 复制一份，填上名称即可。
 
-## 设置 zmodem
-
-如果想要在服务器上执行 rz/sz，则必须在配置文件中指定 zmodem 选项为 true
-
-比如
-```
-{
-    "protocol": "ssh",
-    "host": "root@192.168.1.1",
-    "password": "123456",
-    "zmodem": true
-}
-```
-
-为什么必须要这个选项呢？因为 iterm2-session 用了 tcl/expect 工具，这个工具和 trigger 不能很好的配合。
-有人发现设定字符集可以工作。深层原因不知道，如果你知道原因，请告诉我，谢谢！
-
-所以你使用这个选项后，会发现 iterm2-session 在目标服务器上会重设字符集，以防字符集混乱，请勿怪。
-
 ## 关于tmux、screen
-tmux 和 screen 下，无法使用 rz/sz。很遗憾。如果你能解决，请告诉我。
+tmux 和 screen 下，无法使用 rz/sz。
 
 # 使用手册
 
@@ -160,7 +141,7 @@ tmux 和 screen 下，无法使用 rz/sz。很遗憾。如果你能解决，请�
         "host": "public@10.3.4.5",
         "password": "admin",
         "sudo": true,
-        # run command `m`, list your favourite hosts. Copy & Paste someone.
+        # run `m`, list your favourite hosts. Copy & Paste someone.
         "menu": [
             "telnet 192.168.1.1",
             "telnet 192.168.1.2",
@@ -170,7 +151,7 @@ tmux 和 screen 下，无法使用 rz/sz。很遗憾。如果你能解决，请�
             "protocol": "telnet",
             "host": "root@192.168.1.1:3333",
             "command": ["cd /data", "ls -l"],
-            # run command `m`, list your favourite paths
+            # run `m`, list your favourite paths
             "menu": [
                 "cd /data/app/logs/",
                 "cd /usr/local/your-app/",
@@ -202,8 +183,6 @@ tmux 和 screen 下，无法使用 rz/sz。很遗憾。如果你能解决，请�
 * 跳转的层级无限制，不过一般就 1 跳
 * command 和 password 和 menu 可以是数组
 
-
-
 ## 再PS
 
 下面是一些高级用法，需要你添加规则
@@ -213,17 +192,34 @@ tmux 和 screen 下，无法使用 rz/sz。很遗憾。如果你能解决，请�
 更注重安全的公司的堡垒机上会有 token 认证。
 本程序遇到 token 认证时，会睡眠 60 秒，等待你输入 token。
 目前只识别 `token:` 或者 `Token:` 这样的字样。
-如果贵司的 token 提示不同，请自行修改 expect 脚本。或者，告诉我。
+如果贵司的 token 提示不同，请自行修改 expect 脚本。
 
 ### 关于telnet
 
 很多设备的 telnet 是定制的，特别是厂商自研的网络设备。
 本程序只考虑了 `Username:` `login:` 这种提示。
-如果你发现有不同的提示，请自行修改 expect 脚本。或者，告诉我。
+如果你发现有不同的提示，请自行修改 expect 脚本。
 
 ### 关于Password Manager
 iterm2 下 ALT+COMMAND+F 会唤出密码管理器，这个功能和 SecureCRT 的 button bar 类似。
 本文一开始也提到了这个 button bar，它是一个很好用的小工具，用来发送密码。
+
+### 关于zmodem的字符集问题
+iterm2-session 用了 tcl/expect 工具，因为字符集的原因，这个工具和 trigger 不能很好的配合。
+
+iterm2-session 默认在目标服务器上会重设字符集，以防字符集混乱。这么做和 rz/sz 有关。
+
+使用 `zmodem false` 选项，可以不重设字符集。不过，zmodem false可能导致 rz/sz 不能正常工作。
+
+比如
+```
+{
+    "protocol": "ssh",
+    "host": "root@192.168.1.1",
+    "password": "123456",
+    "zmodem": false
+}
+```
 
 # linux
 虽然，初衷是为了搭配 iterm2 使用，但是本程序也可以做一个命令行工具使用，跑在类 linux 环境下。

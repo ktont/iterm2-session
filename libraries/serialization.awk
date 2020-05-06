@@ -1,4 +1,4 @@
-BEGIN{ 
+BEGIN{
   FS = "\t"
   OFS = "\t"
   outpun = 1
@@ -97,7 +97,7 @@ function parseBlock(block, protocol, user, host, port, sudo, zmodem, passwords, 
 
   if(!port) port = protocol == "ssh" ? 22 : 23
   if(!sudo) sudo = 0
-  if(!zmodem) zmodem = 0
+  if(!zmodem) zmodem = 1
 
   output[0]++
   output[1] = zmodem || output[1] ? 1 : 0;
