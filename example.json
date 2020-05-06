@@ -7,7 +7,8 @@
         "port": 2222,
         "host": "partition.domain.com",
         "sudo": true,
-        # run m, print this messages, copy the message you want
+        # define a command named `m` in current shell environment
+        # run m, print favourite commands
         "menu": [
             "telnet 192.168.1.1",
             "telnet 192.168.1.2",
@@ -21,8 +22,6 @@
                 "cd /data/dir/logs",
                 "ls -l"
             ],
-            # comment line
-            # menu is a command named `m`
             "menu": [
                 "cd /data/dir/logs/",
                 "cd /usr/local/your-app/",
