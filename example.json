@@ -18,13 +18,13 @@
             "host": "192.168.1.1",
             "password": "admin",
             "command": [
-                "cd /data/app/logs",
+                "cd /data/dir/logs",
                 "ls -l"
             ],
             # comment line
             # menu is a command named `m`
             "menu": [
-                "cd /data/app/logs/",
+                "cd /data/dir/logs/",
                 "cd /usr/local/your-app/",
                 "tail -f /var/messages"
             ]
