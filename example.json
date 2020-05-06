@@ -1,22 +1,21 @@
 {
-	"protocol": "ssh",
-	"host": "root@jumpserver.domain.com:555",
-	"password": [ "pass111", "pass222" ],
-	"zmodem": true,
-	"jump": {
-	  	"protocol": "ssh",
+    "protocol": "ssh",
+    "host": "root@jumpserver.domain.com:555",
+    "password": [ "pass111", "pass222" ],
+    "jump": {
+        "protocol": "ssh",
         "port": 2222,
-	  	"host": "partition.domain.com",
+        "host": "partition.domain.com",
         "sudo": true,
         # run m, print this messages, copy the message you want
         "menu": [
-        	"telnet 192.168.1.1",
-        	"telnet 192.168.1.2",
-        	"telnet 192.168.1.3"
+            "telnet 192.168.1.1",
+            "telnet 192.168.1.2",
+            "telnet 192.168.1.3"
         ],
-	  	"jump": {
-	  		"protocol": "telnet",
-		  	"host": "192.168.1.1",
+        "jump": {
+            "protocol": "telnet",
+            "host": "192.168.1.1",
             "password": "admin",
             "command": [
                 "cd /data/app/logs",
@@ -25,10 +24,10 @@
             # comment line
             # menu is a command named `m`
             "menu": [
-            	"cd /data/app/logs/",
-            	"cd /usr/local/your-app/",
-            	"tail -f /var/messages"
+                "cd /data/app/logs/",
+                "cd /usr/local/your-app/",
+                "tail -f /var/messages"
             ]
-	  	}
-	}
+        }
+    }
 }
