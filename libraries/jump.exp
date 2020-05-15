@@ -207,6 +207,14 @@ while {$idx < $argc} {
             }
           }
           
+          if {$menn} {
+            send "m() {\rcat <<EOF\r"
+            foreach j $menu {
+              send "$j\r"
+            }
+            send "EOF\r}\r"
+          }
+
           break
         }
 
