@@ -27,7 +27,7 @@ while {$idx < $argc} {
     set timeout 600
     send_user "\nuser: "
     expect_user -re "(.*)\n"
-    set user "$expect_out(buffer)"
+    set user "$expect_out(1,string)"
     set timeout 10
   }
 
@@ -43,7 +43,7 @@ while {$idx < $argc} {
     set timeout 600
     send_user "\nport: "
     expect_user -re "(.*)\n"
-    set port "$expect_out(buffer)"
+    set port "$expect_out(1,string)"
     set timeout 10
   }
 
@@ -126,7 +126,7 @@ while {$idx < $argc} {
           set timeout 600
           expect_user -re "(.*)\n"
           set timeout 10
-          send "$expect_out(buffer)\n"
+          send "$expect_out(1,string)\n"
           exp_continue
         }
 
